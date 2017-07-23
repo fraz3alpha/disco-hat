@@ -38,16 +38,12 @@ void handleRoot() {
 void handleLedOn() {
   Serial.println("handleOn");
   led_state = ON;
-//  strip.setPixelColor(0, strip.Color(255, 255, 255));
-//  strip.show();
   webServer.send(200, "text/html", responseHTML);
 }
 
 void handleLedOff() {
   Serial.println("handleOff");
   led_state = OFF;
-//  strip.setPixelColor(0, strip.Color(0, 0, 0));
-//  strip.show();
   webServer.send(200, "text/html", responseHTML);
 }
 
@@ -93,10 +89,10 @@ void setup() {
   webServer.on("/", handleRoot);
   webServer.on("/on", handleLedOn);
   webServer.on("/off", handleLedOff);
-    webServer.on("/dim", handleLedDim);
+  webServer.on("/dim", handleLedDim);
   webServer.on("/bright", handleLedBright);
-    webServer.on("/full", handleLedFull);
-    webServer.on("/max", handleLedMax);
+  webServer.on("/full", handleLedFull);
+  webServer.on("/max", handleLedMax);
   // Android captive portal. Maybe not needed. Might be handled by notFound handler.
   webServer.on("/generate_204", handleRoot);
   // Microsoft captive portal. Maybe not needed. Might be handled by notFound handler.
@@ -107,15 +103,14 @@ void setup() {
   webServer.begin();
 }
 
-    uint8_t j;
-    uint16_t i;
+  uint8_t j;
+  uint16_t i;
 
-unsigned long last_changed = 0;
+  unsigned long last_changed = 0;
 
 void loop() {
   dnsServer.processNextRequest();
   webServer.handleClient();
-  //Serial.println(led_state);
 
   if (led_state==ON) {
     if (millis() > last_changed + 20) { 
